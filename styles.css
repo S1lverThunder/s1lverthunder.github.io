@@ -21,7 +21,7 @@ body {
 }
 
 #calculadora {
-    background: white;
+    background: #B3CDD1;
     /* Con estas 3 lineas vamos a hacer que los divs queden lado a lado */
     width: 50%;
     height: 100%;
@@ -29,7 +29,7 @@ body {
 }
 
 #detalle {
-    background: #FF416C;
+    background: #9FA4C4;
     /* Con estas 3 lineas vamos a hacer que los divs queden lado a lado */
     width: 50%;
     height: 100%;
@@ -46,6 +46,13 @@ body {
     padding: 40px;
 }
 
+#texto {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+
 input {
     width: 70%;
     padding: 12px 15px;
@@ -53,20 +60,37 @@ input {
     background-color: #eee;
 }
 
-button {
+#calcular {
     font-size: 15px;
     font-weight: bold;
     padding: 12px 45px;
     border-radius: 30px;
-    background-color: #FF416C;
-    border: 1px solid #FF416C;
+    background-color: #9FA4C4;
+    border: 1px solid #9FA4C4;
     color: #FFFFFF;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: transform 20ms ease-in;
 }
 
-button:active {
+#calcular:active {
+    transform: scale(0.95);
+}
+
+#hollyday {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px 45px;
+    border-radius: 30px;
+    background-color: #9FA4C4;
+    border: 1px solid #9FA4C4;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 20ms ease-in;
+}
+
+#hollyday:active {
     transform: scale(0.95);
 }
 
