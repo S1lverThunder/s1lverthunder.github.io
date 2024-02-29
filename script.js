@@ -1,69 +1,70 @@
-const CALCULAR = document.getElementById('calcular');
-const HOLLYDAY = document.getElementById('hollyday'); 
-const ERROR = document.getElementById('error');
-const FLU = document.getElementById('flu');
-const MAN = document.getElementById('man');
+//Daniel Cáceres
+//Variables globales
+let intentos = 6;
+const diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH', 'ABOUT', 'AGAIN', 'AMONG', 'GUARD', 'PRIDE', 'RADIO', 'PAINT', 'MOVIE', 'QUICK', 'RIVER', 'SUGAR', 'VOICE'];
+const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
 
-function calcFlujo(peso){
-    let resto = peso;
-    let flujo = 0;
-    if (resto>20){
-        let aux = resto-20;
-        flujo += aux*1;
-        resto -= aux;
-    } 
-    if (resto>10){
-        let aux = resto-10;
-        flujo += aux*2;
-        resto -= aux;
-    }
-    flujo += resto*4;
-    return flujo;
+//Constantes del DOM
+const BUTTON = document.getElementById("guess-button");
+const INPUT = document.getElementById("guess-input");
+const GRID = document.getElementById("grid");
+const CONTENEDOR = document.getElementById('guesses');
+
+//funcion a ejecutar al iniciar la ventana
+function init(){
+    console.log('Esto se ejecuta solo cuando se carga la pagina web');
+}
+window.addEventListener('load', init)
+
+BUTTON.addEventListener("click", comprobarLetras);
+function comprobarLetras(){
+	CONTENEDOR.innerHTML = "";
+	const INTENTO = leerIntento();
+	if (INTENTO.length == 5){
+		intentar(INTENTO);
+	}
+	else{
+		CONTENEDOR.innerHTML = "<h1>LA PALABRA DEBE SER DE 5 LETRAS!</h1>";
+	}
 }
 
-function calcHollyday(peso){
-    SC = ( (peso * 4) + 7) / (peso + 90);
-    if (HOLLYDAY.value == 0){
-        return SC*1500;
+function intentar(INTENTO){
+    const ROW = document.createElement('div');
+	ROW.className = 'row';
+    for (let i in palabra){
+    	const SPAN = document.createElement('span');
+		SPAN.className = 'letter';
+	    if (intento[i]===palabra[i]){ //VERDE
+	        SPAN.innerHTML = intento[i];
+	        SPAN.style.backgroundColor = 'green';
+	    } else if( palabra.includes(intento[i]) ) { //AMARILLO
+	        SPAN.innerHTML = intento[i];
+	        SPAN.style.backgroundColor = 'yellow';
+	    } else {      //GRIS
+	        SPAN.innerHTML = intento[i];
+	        SPAN.style.backgroundColor = 'grey'; //AMARILLO
+		}
+
+		ROW.appendChild(SPAN);
+		GRID.appendChild(ROW);
+	}
+	if (INTENTO === palabra ){
+        terminar("<h1>GANASTE!😀</h1>");
+        return;
     }
-    else{
-        return SC*2000;
+	intentos--
+    if (intentos==0){
+        terminar("<h1>PERDISTE!😖</h1><h1>LA PALABRA ERA: "+palabra+"</h1>");
     }
 }
 
-CALCULAR.addEventListener('click', () => {
-    const DATO = document.getElementById('peso').value
-    //validamos que se cargue un dato:
-    if (DATO > 0){
-        ERROR.style.display = 'none'
-        let flujo = 0;
-        if (DATO > 30){
-            flujo = calcHollyday(DATO);
-        }
-        else{
-            flujo = calcFlujo(DATO);
-        }
-        let mantenimiento = flujo*1.5;
-        FLU.innerHTML = flujo + ' cc/hr';
-        MAN.innerHTML = 'm+m/2 ' + mantenimiento + ' cc/hr';
-        FLU.style.display = 'block';
-        MAN.style.display = 'block';
-    } else {
-        ERROR.style.display = 'block';
-        FLU.style.display = 'none';
-        MAN.style.display = 'none';
-    }
-})
-
-HOLLYDAY.addEventListener('click', () => {
-    if(HOLLYDAY.value == 0){
-        HOLLYDAY.style.backgroundColor = "#9E768F";
-        HOLLYDAY.innerHTML = "2000";
-        HOLLYDAY.value = 1;
-    }
-    else{
-        HOLLYDAY.style.backgroundColor = "#9FA4C4";
-        HOLLYDAY.innerHTML = "1500";
-        HOLLYDAY.value = 0;
-    }
-})
+function leerIntento(){
+    intento = INPUT.value;
+    intento = intento.toUpperCase(); 
+    return intento;
+}
+function terminar(mensaje){
+    INPUT.disabled = true;
+    BUTTON.disabled = true;
+    CONTENEDOR.innerHTML = mensaje;
+}
